@@ -1,9 +1,6 @@
 package sesion1;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class MainApp {
 
@@ -17,22 +14,50 @@ public class MainApp {
                 ""
         );
 
-        Statement stmt= con.createStatement();
+        //Statement stmt2 = con.createStatement();
+        //ResultSet resultSet = stmt2.executeQuery("select * from Users where name='Ronaldo'");
 
-        int resultUpdate =  stmt.executeUpdate("update Users set city='Rosario' where name='Messi'");
+       // while(resultSet.next()){
+            //System.out.println(resultSet.getString("name") + "\n"+
+            //resultSet.getString("phone") +"\n"+
+            //resultSet.getString("city"));
+       // }
 
-        ResultSet result = stmt.executeQuery("select * from Users");
+        //---------
 
-        while(result.next()){
+        //PreparedStatement preparedStatement =
+        //        con.prepareStatement("select * from Users where name=? and city=?");
 
-            //System.out.println(result.getString(0));
+        //preparedStatement.setString(1, "Cueva");
+        //preparedStatement.setString(2, "Lima");
 
-            //if(result.getString("name").equals("Ronaldo")) {
-                System.out.println(result.getString("IdUser"));
-                System.out.println(result.getString("name"));
-                System.out.println(result.getString("phone"));
-                System.out.println(result.getString("city"));
-            //}
+        //ResultSet resultSet2 = preparedStatement.executeQuery();
+
+        //while(resultSet2.next()){
+        //   System.out.println(resultSet2.getString("name") + "\n"+
+        //            resultSet2.getString("phone") +"\n"+
+        //           resultSet2.getString("city"));
+        //}
+
+       //---------
+
+        Statement stCreate = con.createStatement();
+
+        int filasAfectadas=
+                stCreate.executeUpdate("INSERT INTO Users VALUES (6,'Maria', '934537423', 'Quito')");
+        //UPDATE Users SET name = 'Juan' WHERE idUser = 1
+
+                System.out.println("Filas Afectadas: " + filasAfectadas);
+                PreparedStatement preparedStatement =
+                        con.prepareStatement("select * from Users where name=?");
+
+                preparedStatement.setString(1,"Maria");
+                ResultSet resultSet3 = preparedStatement .executeQuery();
+
+        while(resultSet3.next()) {
+            System.out.println(resultSet3.getString("name") + "\n" +
+                    resultSet3.getString("phone") + "\n" +
+                    resultSet3.getString("city"));
         }
     }
 }
